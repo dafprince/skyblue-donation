@@ -1,0 +1,475 @@
+/* Page de succès - ULTRA PREMIUM */
+.successPage {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--light-bg) 0%, white 100%);
+  position: relative;
+  overflow: hidden;
+  padding-top: 80px;
+}
+
+/* Confettis Animation */
+.confettiContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: -10px;
+  opacity: 0;
+  animation: confettiFall linear forwards;
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* Section principale */
+.mainSection {
+  padding: 80px 0 120px;
+  position: relative;
+  z-index: 1;
+}
+
+.successCard {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  padding: 80px 60px;
+  border-radius: 32px;
+  box-shadow: 
+    0 25px 70px rgba(0, 0, 0, 0.12),
+    0 0 0 1px rgba(74, 144, 226, 0.1);
+  text-align: center;
+  animation: fadeInUp 0.8s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.successCard::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(74, 144, 226, 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.successCard::after {
+  content: '';
+  position: absolute;
+  bottom: -80px;
+  left: -80px;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(255, 140, 66, 0.06) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Icône de succès */
+.successIcon {
+  margin-bottom: 40px;
+  animation: scaleIn 0.6s ease-out 0.3s both;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.iconCircle {
+  width: 160px;
+  height: 160px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, var(--hope-green), #2ECC71);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 
+    0 20px 50px rgba(92, 184, 92, 0.4),
+    0 0 0 15px rgba(92, 184, 92, 0.1);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Titre */
+.title {
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--deep-blue);
+  margin-bottom: 16px;
+  line-height: 1.2;
+  animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+.subtitle {
+  font-size: 24px;
+  color: var(--neutral-grey);
+  margin-bottom: 50px;
+  font-weight: 500;
+  animation: fadeInUp 0.8s ease-out 0.5s both;
+}
+
+/* Message Box */
+.messageBox {
+  background: linear-gradient(135deg, rgba(74, 144, 226, 0.08), rgba(255, 140, 66, 0.08));
+  padding: 40px;
+  border-radius: 20px;
+  margin-bottom: 50px;
+  border: 2px solid rgba(74, 144, 226, 0.15);
+  animation: fadeInUp 0.8s ease-out 0.6s both;
+}
+
+.message {
+  font-size: 20px;
+  line-height: 1.8;
+  color: var(--neutral-grey);
+  margin-bottom: 20px;
+}
+
+.messageBold {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--deep-blue);
+  margin: 0;
+}
+
+/* Info Box */
+.infoBox {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 28px;
+  background: rgba(92, 184, 92, 0.08);
+  border-radius: 16px;
+  border-left: 4px solid var(--hope-green);
+  margin-bottom: 50px;
+  text-align: left;
+  animation: fadeInUp 0.8s ease-out 0.7s both;
+}
+
+.infoIcon {
+  flex-shrink: 0;
+  color: var(--hope-green);
+}
+
+.infoContent {
+  flex: 1;
+}
+
+.infoText {
+  font-size: 17px;
+  color: var(--neutral-grey);
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.infoTextSmall {
+  font-size: 15px;
+  color: var(--neutral-grey);
+  opacity: 0.8;
+  margin: 0;
+}
+
+/* Stats Grid */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 50px;
+  animation: fadeInUp 0.8s ease-out 0.8s both;
+}
+
+.statCard {
+  background: var(--light-bg);
+  padding: 32px 24px;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.statCard:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+
+.statNumber {
+  font-size: 42px;
+  font-weight: 800;
+  color: var(--sky-blue);
+  margin-bottom: 8px;
+  font-family: var(--font-heading);
+}
+
+.statLabel {
+  font-size: 15px;
+  color: var(--neutral-grey);
+  font-weight: 600;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 50px;
+  animation: fadeInUp 0.8s ease-out 0.9s both;
+}
+
+.primaryButton {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, var(--sky-blue), var(--deep-blue));
+  color: white;
+  padding: 18px 36px;
+  border-radius: 14px;
+  font-size: 17px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
+}
+
+.primaryButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(74, 144, 226, 0.4);
+}
+
+.secondaryButton {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  color: var(--sky-blue);
+  padding: 18px 36px;
+  border-radius: 14px;
+  font-size: 17px;
+  font-weight: 600;
+  border: 2px solid var(--sky-blue);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.secondaryButton:hover {
+  background: var(--sky-blue);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(74, 144, 226, 0.2);
+}
+
+/* Quote Box */
+.quoteBox {
+  padding: 35px;
+  border-left: 5px solid var(--warm-orange);
+  background: rgba(255, 140, 66, 0.05);
+  border-radius: 12px;
+  margin-bottom: 50px;
+  animation: fadeInUp 0.8s ease-out 1s both;
+}
+
+.quote {
+  font-size: 20px;
+  font-style: italic;
+  color: var(--neutral-grey);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+.quoteAuthor {
+  font-size: 16px;
+  color: var(--neutral-grey);
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Extra CTA */
+.extraCta {
+  animation: fadeInUp 0.8s ease-out 1.1s both;
+}
+
+.extraCtaText {
+  font-size: 18px;
+  color: var(--neutral-grey);
+  margin-bottom: 20px;
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, var(--warm-orange) 0%, #FF6B35 100%);
+  color: white;
+  padding: 16px 32px;
+  border-radius: 50px;
+  font-size: 17px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(255, 140, 66, 0.3);
+}
+
+.ctaButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(255, 140, 66, 0.5);
+}
+
+.arrow {
+  font-size: 20px;
+  transition: transform 0.3s ease;
+}
+
+.ctaButton:hover .arrow {
+  transform: translateX(5px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .successCard {
+    padding: 60px 40px;
+    border-radius: 24px;
+  }
+  
+  .iconCircle {
+    width: 130px;
+    height: 130px;
+  }
+  
+  .iconCircle svg {
+    width: 65px;
+    height: 65px;
+  }
+  
+  .title {
+    font-size: 38px;
+  }
+  
+  .subtitle {
+    font-size: 20px;
+  }
+  
+  .messageBox {
+    padding: 32px;
+  }
+  
+  .message {
+    font-size: 18px;
+  }
+  
+  .messageBold {
+    font-size: 22px;
+  }
+  
+  .statsGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .actions {
+    flex-direction: column;
+  }
+  
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .mainSection {
+    padding: 60px 0 100px;
+  }
+  
+  .successCard {
+    padding: 50px 30px;
+  }
+  
+  .iconCircle {
+    width: 110px;
+    height: 110px;
+  }
+  
+  .iconCircle svg {
+    width: 55px;
+    height: 55px;
+  }
+  
+  .title {
+    font-size: 32px;
+  }
+  
+  .subtitle {
+    font-size: 18px;
+  }
+  
+  .messageBox {
+    padding: 28px;
+  }
+  
+  .message {
+    font-size: 17px;
+  }
+  
+  .messageBold {
+    font-size: 20px;
+  }
+  
+  .statNumber {
+    font-size: 36px;
+  }
+  
+  .primaryButton,
+  .secondaryButton,
+  .ctaButton {
+    padding: 16px 28px;
+    font-size: 16px;
+  }
+}

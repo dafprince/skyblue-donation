@@ -1,0 +1,635 @@
+/* Page de don */
+.donatePage {
+  padding-top: 80px;
+  background: var(--light-bg);
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  height: 50vh;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.heroBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--deep-blue) 0%, var(--sky-blue) 100%);
+  z-index: 0;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: white;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.heroTitle {
+  font-size: 56px;
+  margin-bottom: 16px;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.heroSubtitle {
+  font-size: 24px;
+  font-style: italic;
+  opacity: 0.95;
+}
+
+/* Section principale */
+.mainSection {
+  padding: 80px 0 100px;
+}
+
+.donateWrapper {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 50px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Colonne formulaire */
+.formColumn {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.form {
+  background: white;
+  padding: 50px 45px;
+  border-radius: 24px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Section */
+.section {
+  margin-bottom: 45px;
+  padding-bottom: 45px;
+  border-bottom: 2px solid var(--light-bg);
+}
+
+.section:last-of-type {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.sectionTitle {
+  font-size: 24px;
+  margin-bottom: 28px;
+  color: var(--deep-blue);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.stepNumber {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--sky-blue), var(--deep-blue));
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* Boutons de montant */
+.amountButtons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.amountButton {
+  padding: 20px 16px;
+  border: 2px solid #E5E7EB;
+  border-radius: 14px;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--deep-blue);
+  background: white;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.amountButton:hover {
+  border-color: var(--sky-blue);
+  background: rgba(74, 144, 226, 0.05);
+  transform: translateY(-3px);
+}
+
+.amountActive {
+  padding: 20px 16px;
+  border: 3px solid var(--sky-blue);
+  border-radius: 14px;
+  font-size: 22px;
+  font-weight: 700;
+  color: white;
+  background: linear-gradient(135deg, var(--sky-blue), var(--deep-blue));
+  box-shadow: 0 8px 20px rgba(74, 144, 226, 0.3);
+  cursor: pointer;
+}
+
+/* Montant personnalisé */
+.customAmount {
+  margin-top: 24px;
+}
+
+.customAmount label {
+  display: block;
+  margin-bottom: 12px;
+  font-weight: 600;
+  color: var(--deep-blue);
+  font-size: 15px;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  padding: 18px 50px 18px 20px;
+  border: 2px solid #E5E7EB;
+  border-radius: 12px;
+  font-size: 17px;
+  font-family: inherit;
+  color: var(--deep-blue);
+  font-weight: 600;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--sky-blue);
+  box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.1);
+}
+
+.currency {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--neutral-grey);
+  pointer-events: none;
+}
+
+/* Info box */
+.infoBox {
+  margin-top: 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 18px;
+  background: rgba(74, 144, 226, 0.08);
+  border-radius: 12px;
+  border-left: 4px solid var(--sky-blue);
+}
+
+.infoBox svg {
+  color: var(--sky-blue);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.infoBox p {
+  font-size: 15px;
+  color: var(--neutral-grey);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.infoBox strong {
+  color: var(--deep-blue);
+  font-weight: 700;
+}
+
+/* Form group */
+.formGroup {
+  margin-bottom: 24px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: var(--deep-blue);
+  font-size: 15px;
+}
+
+/* Checkbox */
+.checkboxGroup {
+  margin-bottom: 18px;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  padding: 12px;
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+.checkbox:hover {
+  background: rgba(74, 144, 226, 0.05);
+}
+
+.checkbox input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  accent-color: var(--sky-blue);
+}
+
+.checkbox span {
+  font-size: 15px;
+  color: var(--neutral-grey);
+  font-weight: 500;
+}
+
+/* Submit button */
+.submitButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: linear-gradient(135deg, var(--warm-orange) 0%, #FF6B35 100%);
+  color: white;
+  padding: 22px 40px;
+  border-radius: 60px;
+  font-size: 19px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 12px 40px rgba(255, 140, 66, 0.45);
+  position: relative;
+  overflow: visible;
+  transition: all 0.4s ease;
+  z-index: 1;
+  margin-top: 40px;
+}
+
+.submitButton::before,
+.submitButton::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  border-radius: 60px;
+  border: 3px solid var(--warm-orange);
+  opacity: 0;
+  animation: ripple 2.5s ease-out infinite;
+  z-index: -1;
+}
+
+.submitButton::after {
+  animation-delay: 1.25s;
+}
+
+@keyframes ripple {
+  0% {
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+  }
+  100% {
+    width: 170%;
+    height: 170%;
+    opacity: 0;
+  }
+}
+
+.submitButton:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 16px 50px rgba(255, 140, 66, 0.6);
+}
+
+.submitButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.lampIcon {
+  font-size: 26px;
+  animation: pulseLamp 1.5s ease-in-out infinite;
+}
+
+@keyframes pulseLamp {
+  0%, 100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.2);
+    filter: brightness(1.5);
+  }
+}
+
+.arrow {
+  font-size: 24px;
+  transition: transform 0.3s ease;
+}
+
+.submitButton:hover .arrow {
+  transform: translateX(6px);
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Colonne sidebar */
+.sidebarColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+/* Summary card */
+.summaryCard {
+  background: white;
+  padding: 35px 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  border: 2px solid rgba(74, 144, 226, 0.15);
+}
+
+.summaryTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--deep-blue);
+  margin-bottom: 24px;
+}
+
+.summaryAmount {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(74, 144, 226, 0.08), rgba(255, 140, 66, 0.08));
+  border-radius: 14px;
+  margin-bottom: 24px;
+}
+
+.summaryLabel {
+  font-size: 16px;
+  color: var(--neutral-grey);
+  font-weight: 600;
+}
+
+.summaryValue {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--sky-blue);
+  font-family: var(--font-heading);
+}
+
+.impactPreview {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px;
+  background: rgba(92, 184, 92, 0.08);
+  border-radius: 12px;
+  border-left: 4px solid var(--hope-green);
+}
+
+.impactPreview svg {
+  color: var(--hope-green);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.impactTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--deep-blue);
+  margin-bottom: 6px;
+}
+
+.impactText {
+  font-size: 16px;
+  color: var(--neutral-grey);
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Trust card */
+.trustCard {
+  background: white;
+  padding: 35px 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.trustTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--deep-blue);
+  margin-bottom: 24px;
+}
+
+.trustBadges {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.trustBadge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--light-bg);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.trustBadge:hover {
+  background: rgba(74, 144, 226, 0.08);
+  transform: translateX(4px);
+}
+
+.trustBadge svg {
+  color: var(--sky-blue);
+  flex-shrink: 0;
+}
+
+.trustBadge span {
+  font-size: 14px;
+  color: var(--neutral-grey);
+  font-weight: 500;
+}
+
+/* Testimonial card */
+.testimonialCard {
+  background: linear-gradient(135deg, var(--sky-blue), var(--deep-blue));
+  padding: 30px 28px;
+  border-radius: 20px;
+  color: white;
+  box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
+}
+
+.testimonialText {
+  font-size: 16px;
+  font-style: italic;
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+
+.testimonialAuthor {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.authorName {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.rating {
+  font-size: 16px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .donateWrapper {
+    gap: 40px;
+  }
+  
+  .form {
+    padding: 40px 35px;
+  }
+}
+
+@media (max-width: 768px) {
+  .donatePage {
+    padding-top: 80px;
+  }
+  
+  .hero {
+    height: 40vh;
+    min-height: 350px;
+  }
+  
+  .heroTitle {
+    font-size: 42px;
+  }
+  
+  .heroSubtitle {
+    font-size: 20px;
+  }
+  
+  .mainSection {
+    padding: 60px 0 80px;
+  }
+  
+  .donateWrapper {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .form {
+    padding: 35px 28px;
+  }
+  
+  .sectionTitle {
+    font-size: 22px;
+  }
+  
+  .amountButtons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .summaryValue {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .heroTitle {
+    font-size: 36px;
+  }
+  
+  .heroSubtitle {
+    font-size: 18px;
+  }
+  
+  .form {
+    padding: 30px 24px;
+  }
+  
+  .amountButtons {
+    gap: 12px;
+  }
+  
+  .amountButton,
+  .amountActive {
+    padding: 18px 14px;
+    font-size: 20px;
+  }
+  
+  .submitButton {
+    padding: 20px 36px;
+    font-size: 17px;
+  }
+}
