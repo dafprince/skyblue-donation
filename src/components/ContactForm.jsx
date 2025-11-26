@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import { supabase } from '../services/supabase';
 import styles from './ContactForm.module.css';
 
 export default function ContactForm() {
@@ -33,11 +34,25 @@ export default function ContactForm() {
 
     setIsSubmitting(true);
 
-    // Simulation d'envoi (tu ajouteras la vraie API après)
-    setTimeout(() => {
-      console.log('Contact form:', formData);
+    try {
+      // Enregistrer dans Supabase
+      const { data, error } = await supabase
+        .from('messages')
+        .insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone || null,
+            subject: formData.subject,
+            message: formData.message,
+            status: 'unread'
+          }
+        ]);
+
+      if (error) throw error;
+
+      console.log('✅ Message enregistré:', data);
       setSubmitStatus('success');
-      setIsSubmitting(false);
       
       // Reset form
       setFormData({
@@ -50,7 +65,13 @@ export default function ContactForm() {
 
       // Reset status après 5 secondes
       setTimeout(() => setSubmitStatus(null), 5000);
-    }, 1500);
+    } catch (error) {
+      console.error('❌ Erreur:', error);
+      setSubmitStatus('error');
+      setTimeout(() => setSubmitStatus(null), 3000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -144,7 +165,7 @@ export default function ContactForm() {
                   type="tel"
                   id="phone"
                   name="phone"
-                  placeholder="+33 6 XX XX XX XX"
+                  placeholder="+221 XX XX XX XX"
                   value={formData.phone}
                   onChange={handleChange}
                   className={styles.input}
@@ -209,7 +230,7 @@ export default function ContactForm() {
 
               {submitStatus === 'error' && (
                 <div className={styles.errorMessage}>
-                  ❌ Veuillez remplir tous les champs obligatoires.
+                  ❌ Une erreur est survenue. Veuillez réessayer.
                 </div>
               )}
             </form>

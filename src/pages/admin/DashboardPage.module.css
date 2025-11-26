@@ -1,0 +1,243 @@
+.dashboardPage {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.loading {
+  text-align: center;
+  padding: 100px 20px;
+  font-size: 18px;
+  color: var(--neutral-grey);
+}
+
+.header {
+  margin-bottom: 40px;
+}
+
+.header h1 {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--deep-blue);
+  margin-bottom: 8px;
+}
+
+.header p {
+  font-size: 16px;
+  color: var(--neutral-grey);
+}
+
+/* Stats Grid */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 50px;
+}
+
+.statCard {
+  background: white;
+  padding: 28px;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.statCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  border-color: rgba(74, 144, 226, 0.2);
+}
+
+.statIcon {
+  width: 70px;
+  height: 70px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 8px 20px rgba(74, 144, 226, 0.3);
+  flex-shrink: 0;
+}
+
+.statContent {
+  flex: 1;
+}
+
+.statLabel {
+  font-size: 14px;
+  color: var(--neutral-grey);
+  margin-bottom: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.statValue {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--deep-blue);
+  margin: 0;
+  font-family: var(--font-heading);
+}
+
+.progressBar {
+  width: 100%;
+  height: 8px;
+  background: var(--light-bg);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 12px;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--hope-green), #27AE60);
+  border-radius: 10px;
+  transition: width 0.5s ease;
+}
+
+/* Section */
+.section {
+  margin-bottom: 40px;
+}
+
+.section h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--deep-blue);
+  margin-bottom: 20px;
+}
+
+/* Table */
+.tableCard {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table thead {
+  background: linear-gradient(135deg, var(--deep-blue), var(--sky-blue));
+}
+
+.table th {
+  padding: 18px 20px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.table tbody tr {
+  border-bottom: 1px solid var(--light-bg);
+  transition: background 0.2s ease;
+}
+
+.table tbody tr:hover {
+  background: rgba(74, 144, 226, 0.05);
+}
+
+.table td {
+  padding: 18px 20px;
+  font-size: 15px;
+  color: var(--neutral-grey);
+}
+
+.amount {
+  font-weight: 700;
+  color: var(--hope-green);
+  font-size: 16px;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--neutral-grey);
+  font-size: 16px;
+}
+
+/* Messages Grid */
+.messagesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.messageCard {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border-left: 4px solid var(--sky-blue);
+}
+
+.messageCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.messageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.messageHeader h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--deep-blue);
+  margin: 0;
+}
+
+.messageDate {
+  font-size: 13px;
+  color: var(--neutral-grey);
+}
+
+.messageSubject {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--sky-blue);
+  margin-bottom: 8px;
+}
+
+.messagePreview {
+  font-size: 14px;
+  color: var(--neutral-grey);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .messagesGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .table {
+    font-size: 13px;
+  }
+  
+  .table th,
+  .table td {
+    padding: 12px 10px;
+  }
+}

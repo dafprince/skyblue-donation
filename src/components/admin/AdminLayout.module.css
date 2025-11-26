@@ -1,0 +1,19 @@
+.adminLayout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--light-bg);
+}
+
+.mainContent {
+  flex: 1;
+  margin-left: 260px;
+  padding: 30px;
+  min-height: 100vh;
+}
+
+@media (max-width: 768px) {
+  .mainContent {
+    margin-left: 0;
+    padding: 20px;
+  }
+}

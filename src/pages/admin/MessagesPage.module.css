@@ -1,0 +1,358 @@
+.messagesPage {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.loading {
+  text-align: center;
+  padding: 100px 20px;
+  font-size: 18px;
+  color: var(--neutral-grey);
+}
+
+.header {
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--deep-blue);
+  margin-bottom: 8px;
+}
+
+.header p {
+  font-size: 16px;
+  color: var(--neutral-grey);
+}
+
+/* Filters */
+.filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.filterButton {
+  padding: 10px 20px;
+  background: white;
+  border: 2px solid var(--light-bg);
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--neutral-grey);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filterButton:hover {
+  border-color: var(--sky-blue);
+  color: var(--sky-blue);
+}
+
+.filterButton.active {
+  background: linear-gradient(135deg, var(--sky-blue), var(--deep-blue));
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+}
+
+/* Search Bar */
+.searchBar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin-bottom: 24px;
+}
+
+.searchBar svg {
+  color: var(--neutral-grey);
+  flex-shrink: 0;
+}
+
+.searchBar input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  color: var(--deep-blue);
+}
+
+/* Messages List */
+.messagesList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.messageItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-left: 4px solid transparent;
+}
+
+.messageItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+}
+
+.messageItem.unread {
+  border-left-color: var(--warm-orange);
+  background: rgba(255, 140, 66, 0.05);
+}
+
+.messageIcon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, var(--sky-blue), var(--deep-blue));
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+}
+
+.messageContent {
+  flex: 1;
+}
+
+.messageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.messageHeader h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--deep-blue);
+  margin: 0;
+}
+
+.messageDate {
+  font-size: 13px;
+  color: var(--neutral-grey);
+}
+
+.messageSubject {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--sky-blue);
+  margin-bottom: 6px;
+}
+
+.messagePreview {
+  font-size: 14px;
+  color: var(--neutral-grey);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--neutral-grey);
+  font-size: 16px;
+  background: white;
+  border-radius: 16px;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+.modalContent {
+  background: white;
+  border-radius: 24px;
+  padding: 40px;
+  max-width: 700px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--light-bg);
+}
+
+.modalHeader h2 {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--deep-blue);
+  margin: 0;
+  flex: 1;
+}
+
+.modalActions {
+  display: flex;
+  gap: 8px;
+}
+
+.iconButton,
+.iconButtonDanger {
+  padding: 10px;
+  background: var(--light-bg);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconButton:hover {
+  background: var(--sky-blue);
+  color: white;
+}
+
+.iconButtonDanger {
+  background: rgba(231, 76, 60, 0.1);
+  color: var(--impact-red);
+}
+
+.iconButtonDanger:hover {
+  background: var(--impact-red);
+  color: white;
+}
+
+.messageDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding: 20px;
+  background: var(--light-bg);
+  border-radius: 12px;
+}
+
+.detailRow {
+  display: flex;
+  gap: 12px;
+}
+
+.detailLabel {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--neutral-grey);
+  min-width: 100px;
+}
+
+.detailValue {
+  font-size: 14px;
+  color: var(--deep-blue);
+  font-weight: 500;
+}
+
+.messageBody {
+  padding: 24px;
+  background: var(--light-bg);
+  border-radius: 12px;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--neutral-grey);
+  margin-bottom: 24px;
+  white-space: pre-wrap;
+}
+
+.modalFooter {
+  display: flex;
+  gap: 12px;
+}
+
+.replyButton {
+  flex: 1;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--hope-green), #27AE60);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+}
+
+.replyButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(92, 184, 92, 0.4);
+}
+
+.closeButton {
+  flex: 1;
+  padding: 14px;
+  background: var(--light-bg);
+  color: var(--deep-blue);
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.closeButton:hover {
+  background: var(--neutral-grey);
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .filters {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+  
+  .messageItem {
+    flex-direction: column;
+  }
+  
+  .messageIcon {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .modalContent {
+    padding: 30px 20px;
+  }
+  
+  .modalFooter {
+    flex-direction: column;
+  }
+}

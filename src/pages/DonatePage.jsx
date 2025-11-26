@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Lock, CheckCircle, Globe, CreditCard, Shield, TrendingUp } from 'lucide-react';
 import styles from './DonatePage.module.css';
-
+import stripePromise from '../services/stripe';
 export default function DonatePage() {
   const navigate = useNavigate();
   
@@ -16,7 +16,7 @@ export default function DonatePage() {
 
   const presetAmounts = [10, 25, 50, 100, 200];
 
- const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
   e.preventDefault();
   
   // Validation
@@ -34,23 +34,42 @@ export default function DonatePage() {
 
   setIsSubmitting(true);
 
-  // Simulation (tu intégreras Stripe après)
-  setTimeout(() => {
-    console.log({
-      amount: finalAmount,
-      email,
-      name,
-      isAnonymous,
-      acceptNewsletter
+  try {
+    // Créer une session Stripe Checkout
+    const response = await fetch('https://backend-skyblue.onrender.com/api/create-checkout-session', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        amount: finalAmount,
+        email: email,
+        name: name,
+        isAnonymous: isAnonymous,
+        acceptNewsletter: acceptNewsletter
+      }),
     });
 
+    const data = await response.json();
+
+    if (!data.url) {
+      throw new Error('Erreur lors de la création de la session');
+    }
+
+    // ✅ AJOUTE CES LIGNES ICI
+    localStorage.setItem('donorEmail', email);
+    localStorage.setItem('donorName', name);
+    localStorage.setItem('donationAmount', finalAmount.toString());
+
+    // Redirection vers Stripe Checkout
+    window.location.href = data.url;
+
+  } catch (error) {
+    console.error('Erreur:', error);
+    alert('Une erreur est survenue. Veuillez réessayer.');
     setIsSubmitting(false);
-
-    // ✅ REDIRECTION VERS LA PAGE DE SUCCÈS
-    navigate('/don-success');
-  }, 2000);
+  }
 };
-
   const selectedAmount = customAmount ? parseFloat(customAmount) : amount;
 
   return (
