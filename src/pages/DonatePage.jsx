@@ -1,271 +1,356 @@
 import { useState } from 'react';
+import { Lock, CheckCircle, Globe, CreditCard, Shield, TrendingUp } from 'lucide-react';
 import styles from './DonatePage.module.css';
 
-const DonatePage = () => {
-  const [amount, setAmount] = useState('');
+export default function DonatePage() {
+  const [amount, setAmount] = useState(50);
   const [customAmount, setCustomAmount] = useState('');
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [newsletter, setNewsletter] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [isAnonymous, setIsAnonymous] = useState(false);
+  const [acceptNewsletter, setAcceptNewsletter] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
 
-  const predefinedAmounts = [10, 25, 50, 100, 200];
-
-  const handleAmountClick = (value) => {
-    setAmount(value.toString());
-    setCustomAmount('');
-  };
-
-  const handleCustomAmountChange = (e) => {
-    const value = e.target.value;
-    setCustomAmount(value);
-    setAmount(value);
-  };
+  const presetAmounts = [10, 25, 50, 100, 200];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    setLoading(true);
+    
+    // Validation
+    if (!email) {
+      setError('Email obligatoire');
+      return;
+    }
+
+    const finalAmount = customAmount || amount;
+
+    if (finalAmount < 5) {
+      setError('Le montant minimum est de 5€');
+      return;
+    }
+
+    setIsSubmitting(true);
 
     try {
-      const finalAmount = parseFloat(amount || customAmount);
-
-      if (!finalAmount || finalAmount < 5) {
-        setError('Le montant minimum est de 5€');
-        setLoading(false);
-        return;
-      }
-
-      if (!name || !email) {
-        setError('Veuillez remplir tous les champs obligatoires');
-        setLoading(false);
-        return;
-      }
-
-      // Validation email
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        setError('Email invalide');
-        setLoading(false);
-        return;
-      }
-
-      // Validation téléphone (optionnel mais recommandé)
-      if (phone && !phone.startsWith('+')) {
-        setError('Le téléphone doit commencer par + (ex: +221776543210)');
-        setLoading(false);
-        return;
-      }
+      console.log('💾 Données à envoyer:', {
+        amount: finalAmount,
+        name,
+        email,
+        phone
+      });
 
       // Stocker les données pour l'email
       localStorage.setItem('donorEmail', email);
       localStorage.setItem('donorName', name);
       localStorage.setItem('donationAmount', finalAmount.toString());
 
-      console.log('💾 Données stockées:', {
-        email,
-        name,
-        amount: finalAmount
-      });
-
-      // Appeler le backend pour créer le paiement Bictorys
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/create-bictorys-payment`, {
+      // Créer un paiement Bictorys
+      const response = await fetch('https://backend-skyblue.onrender.com/api/create-bictorys-payment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           amount: finalAmount,
-          name,
-          email,
-          phone: phone || '+221000000000' // Numéro par défaut si vide
+          email: email,
+          name: name || 'Donateur anonyme',
+          phone: phone || '+221000000000'
         }),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Erreur lors de la création du paiement');
+      const responseText = await response.text();
+      console.log('📥 Réponse brute:', responseText);
+
+      let data;
+      try {
+        data = JSON.parse(responseText);
+      } catch (parseError) {
+        console.error('❌ Erreur parsing:', parseError);
+        throw new Error('Réponse serveur invalide');
       }
 
-      const data = await response.json();
-      
-      console.log('✅ Paiement créé:', data);
+      if (!response.ok) {
+        console.error('❌ Erreur serveur:', data);
+        throw new Error(data.error || 'Erreur création paiement');
+      }
 
-      // Rediriger vers la page de paiement Bictorys
+      if (!data.checkoutUrl) {
+        console.error('❌ Pas de checkoutUrl:', data);
+        throw new Error('URL de paiement manquante');
+      }
+
+      console.log('✅ Paiement créé, redirection vers:', data.checkoutUrl);
+
+      // Redirection vers Bictorys Checkout
       window.location.href = data.checkoutUrl;
 
     } catch (error) {
-      console.error('❌ Erreur:', error);
+      console.error('❌ Erreur complète:', error);
       setError(error.message || 'Une erreur est survenue. Veuillez réessayer.');
-      setLoading(false);
+      setIsSubmitting(false);
     }
   };
 
+  const selectedAmount = customAmount ? parseFloat(customAmount) : amount;
+
   return (
     <div className={styles.donatePage}>
-      <div className={styles.container}>
-        {/* Header */}
-        <div className={styles.header}>
-          <h1 className={styles.title}>💙 Faire un Don</h1>
-          <p className={styles.subtitle}>
-            Votre générosité change des vies. Chaque euro compte pour offrir un avenir meilleur aux enfants orphelins.
-          </p>
+      
+      {/* Hero Section */}
+      <section className={styles.hero}>
+        <div className={styles.heroBackground}>
+          <div className={styles.overlay}></div>
         </div>
+        <div className="container">
+          <div className={styles.heroContent}>
+            <h1 className={styles.heroTitle}>FAIRE UN DON</h1>
+            <p className={styles.heroSubtitle}>
+              Votre générosité change des vies
+            </p>
+          </div>
+        </div>
+      </section>
 
-        {/* Formulaire */}
-        <form className={styles.donationForm} onSubmit={handleSubmit}>
-          {/* Montants prédéfinis */}
-          <div className={styles.formGroup}>
-            <label className={styles.label}>Choisissez un montant (EUR)</label>
-            <div className={styles.amountButtons}>
-              {predefinedAmounts.map((value) => (
-                <button
-                  key={value}
-                  type="button"
-                  className={`${styles.amountButton} ${amount === value.toString() ? styles.active : ''}`}
-                  onClick={() => handleAmountClick(value)}
+      {/* Section principale */}
+      <section className={styles.mainSection}>
+        <div className="container">
+          <div className={styles.donateWrapper}>
+            
+            {/* Colonne gauche : Formulaire */}
+            <div className={styles.formColumn}>
+              <form onSubmit={handleSubmit} className={styles.form}>
+                
+                {/* Section 1 : Montant */}
+                <div className={styles.section}>
+                  <h2 className={styles.sectionTitle}>
+                    <span className={styles.stepNumber}>1</span>
+                    CHOISISSEZ VOTRE MONTANT
+                  </h2>
+                  
+                  <div className={styles.amountButtons}>
+                    {presetAmounts.map((amt) => (
+                      <button
+                        key={amt}
+                        type="button"
+                        className={amount === amt && !customAmount ? styles.amountActive : styles.amountButton}
+                        onClick={() => {
+                          setAmount(amt);
+                          setCustomAmount('');
+                        }}
+                      >
+                        {amt}€
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className={styles.customAmount}>
+                    <label htmlFor="customAmount">Ou montant personnalisé :</label>
+                    <div className={styles.inputWrapper}>
+                      <input
+                        type="number"
+                        id="customAmount"
+                        min="5"
+                        max="10000"
+                        placeholder="Montant en €"
+                        value={customAmount}
+                        onChange={(e) => {
+                          setCustomAmount(e.target.value);
+                          setAmount(0);
+                        }}
+                        className={styles.input}
+                      />
+                      <span className={styles.currency}>€</span>
+                    </div>
+                    <p className={styles.conversionHint}>
+                      ≈ {(selectedAmount * 656).toFixed(0)} XOF (Francs CFA)
+                    </p>
+                  </div>
+
+                  <div className={styles.infoBox}>
+                    <Lock size={20} />
+                    <p>
+                      Votre don n'est soumis à <strong>aucun engagement</strong> et ne sera PAS prélevé automatiquement.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Section 2 : Informations */}
+                <div className={styles.section}>
+                  <h2 className={styles.sectionTitle}>
+                    <span className={styles.stepNumber}>2</span>
+                    VOS INFORMATIONS
+                  </h2>
+
+                  <div className={styles.formGroup}>
+                    <label htmlFor="name">Prénom et Nom (optionnel)</label>
+                    <input
+                      type="text"
+                      id="name"
+                      placeholder="Marie Dupont"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className={styles.input}
+                    />
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label htmlFor="email">Email (pour recevoir le reçu) *</label>
+                    <input
+                      type="email"
+                      id="email"
+                      placeholder="marie@email.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className={styles.input}
+                      required
+                    />
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label htmlFor="phone">
+                      Téléphone (optionnel)
+                      <span className={styles.optionalLabel}> - Format international</span>
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      placeholder="+221776543210"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className={styles.input}
+                    />
+                    <p className={styles.phoneHint}>
+                      ℹ️ Exemple : +221 suivi de votre numéro
+                    </p>
+                  </div>
+
+                  <div className={styles.checkboxGroup}>
+                    <label className={styles.checkbox}>
+                      <input
+                        type="checkbox"
+                        checked={isAnonymous}
+                        onChange={(e) => setIsAnonymous(e.target.checked)}
+                      />
+                      <span>Don anonyme</span>
+                    </label>
+                  </div>
+
+                  <div className={styles.checkboxGroup}>
+                    <label className={styles.checkbox}>
+                      <input
+                        type="checkbox"
+                        checked={acceptNewsletter}
+                        onChange={(e) => setAcceptNewsletter(e.target.checked)}
+                      />
+                      <span>Je souhaite recevoir des nouvelles</span>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Message d'erreur */}
+                {error && (
+                  <div className={styles.errorBox}>
+                    ⚠️ {error}
+                  </div>
+                )}
+
+                {/* Bouton de soumission */}
+                <button 
+                  type="submit" 
+                  className={styles.submitButton}
+                  disabled={isSubmitting}
                 >
-                  {value}€
+                  {isSubmitting ? (
+                    <>
+                      <span className={styles.spinner}></span>
+                      <span>Redirection vers Bictorys...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className={styles.lampIcon}>💡</span>
+                      <span>PROCÉDER AU PAIEMENT</span>
+                      <span className={styles.arrow}>→</span>
+                    </>
+                  )}
                 </button>
-              ))}
+
+                <p className={styles.secureInfo}>
+                  🔒 Paiement 100% sécurisé par Bictorys • Orange Money • Wave • Cartes bancaires
+                </p>
+              </form>
             </div>
-          </div>
 
-          {/* Montant personnalisé */}
-          <div className={styles.formGroup}>
-            <label htmlFor="customAmount" className={styles.label}>Ou entrez un montant personnalisé (EUR)</label>
-            <div className={styles.inputWrapper}>
-              <input
-                type="number"
-                id="customAmount"
-                className={styles.input}
-                placeholder="Montant en euros"
-                value={customAmount}
-                onChange={handleCustomAmountChange}
-                min="5"
-                step="1"
-              />
-              <span className={styles.currency}>EUR</span>
-            </div>
-            <p className={styles.hint}>
-              ℹ️ Votre don sera converti en XOF (Francs CFA) : {(parseFloat(amount || customAmount || 0) * 656).toFixed(0)} XOF
-            </p>
-          </div>
+            {/* Colonne droite : Résumé & Badges */}
+            <div className={styles.sidebarColumn}>
+              
+              {/* Résumé du don */}
+              <div className={styles.summaryCard}>
+                <h3 className={styles.summaryTitle}>📊 Résumé de votre don</h3>
+                <div className={styles.summaryAmount}>
+                  <span className={styles.summaryLabel}>Montant</span>
+                  <span className={styles.summaryValue}>{selectedAmount}€</span>
+                </div>
+                <div className={styles.impactPreview}>
+                  <TrendingUp size={24} />
+                  <div>
+                    <p className={styles.impactTitle}>Votre impact :</p>
+                    {selectedAmount >= 10 && selectedAmount < 50 && (
+                      <p className={styles.impactText}>≈ {Math.floor(selectedAmount)} repas chauds</p>
+                    )}
+                    {selectedAmount >= 50 && selectedAmount < 100 && (
+                      <p className={styles.impactText}>≈ 1 mois d'éducation</p>
+                    )}
+                    {selectedAmount >= 100 && (
+                      <p className={styles.impactText}>≈ 2 mois de prise en charge</p>
+                    )}
+                  </div>
+                </div>
+              </div>
 
-          {/* Informations personnelles */}
-          <div className={styles.formGroup}>
-            <label htmlFor="name" className={styles.label}>Nom complet *</label>
-            <input
-              type="text"
-              id="name"
-              className={styles.input}
-              placeholder="Votre nom"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </div>
+              {/* Badges de confiance */}
+              <div className={styles.trustCard}>
+                <h3 className={styles.trustTitle}>🛡️ Paiements acceptés</h3>
+                <div className={styles.trustBadges}>
+                  <div className={styles.trustBadge}>
+                    <Lock size={24} />
+                    <span>Paiement 100% sécurisé</span>
+                  </div>
+                  <div className={styles.trustBadge}>
+                    <CheckCircle size={24} />
+                    <span>Orange Money</span>
+                  </div>
+                  <div className={styles.trustBadge}>
+                    <Globe size={24} />
+                    <span>Wave</span>
+                  </div>
+                  <div className={styles.trustBadge}>
+                    <CreditCard size={24} />
+                    <span>Cartes Visa/Mastercard</span>
+                  </div>
+                  <div className={styles.trustBadge}>
+                    <Shield size={24} />
+                    <span>Certifié Bictorys</span>
+                  </div>
+                </div>
+              </div>
 
-          <div className={styles.formGroup}>
-            <label htmlFor="email" className={styles.label}>Email *</label>
-            <input
-              type="email"
-              id="email"
-              className={styles.input}
-              placeholder="[email protected]"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className={styles.formGroup}>
-            <label htmlFor="phone" className={styles.label}>
-              Téléphone (recommandé) 
-              <span className={styles.optional}>- Format international</span>
-            </label>
-            <input
-              type="tel"
-              id="phone"
-              className={styles.input}
-              placeholder="+221776543210"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
-            <p className={styles.hint}>
-              ℹ️ Format : +221 suivi de votre numéro (ex: +221776543210)
-            </p>
-          </div>
-
-          {/* Newsletter */}
-          <div className={styles.checkboxGroup}>
-            <input
-              type="checkbox"
-              id="newsletter"
-              checked={newsletter}
-              onChange={(e) => setNewsletter(e.target.checked)}
-            />
-            <label htmlFor="newsletter">
-              Je souhaite recevoir des nouvelles de l'association
-            </label>
-          </div>
-
-          {/* Message d'erreur */}
-          {error && (
-            <div className={styles.error}>
-              ⚠️ {error}
-            </div>
-          )}
-
-          {/* Bouton de soumission */}
-          <button 
-            type="submit" 
-            className={styles.submitButton}
-            disabled={loading}
-          >
-            {loading ? (
-              <>
-                <span className={styles.spinner}></span>
-                Redirection...
-              </>
-            ) : (
-              <>
-                💳 PROCÉDER AU PAIEMENT
-              </>
-            )}
-          </button>
-
-          <p className={styles.secureInfo}>
-            🔒 Paiement 100% sécurisé par Bictorys
-          </p>
-        </form>
-
-        {/* Impact */}
-        <div className={styles.impact}>
-          <h2 className={styles.impactTitle}>Votre impact</h2>
-          <div className={styles.impactGrid}>
-            <div className={styles.impactCard}>
-              <div className={styles.impactIcon}>🍲</div>
-              <h3>10€</h3>
-              <p>Un repas chaud pour 5 enfants</p>
-            </div>
-            <div className={styles.impactCard}>
-              <div className={styles.impactIcon}>📚</div>
-              <h3>25€</h3>
-              <p>Des fournitures scolaires pour 3 enfants</p>
-            </div>
-            <div className={styles.impactCard}>
-              <div className={styles.impactIcon}>🏥</div>
-              <h3>50€</h3>
-              <p>Des soins médicaux pour un enfant</p>
+              {/* Témoignages rapides */}
+              <div className={styles.testimonialCard}>
+                <p className={styles.testimonialText}>
+                  "Processus de don simple et sécurisé. Merci SkyBlue !"
+                </p>
+                <div className={styles.testimonialAuthor}>
+                  <span className={styles.authorName}>Marie D.</span>
+                  <span className={styles.rating}>⭐⭐⭐⭐⭐</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
-};
-
-export default DonatePage;
+}
